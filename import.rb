@@ -37,7 +37,7 @@ module Import
   def load_import_objects(spreadsheet, sheet_names, files_list, envelope_files_list)
     import_objects = [];
     spreadsheet.worksheets.each do |wsheet|
-      if sheet_names.includes?(wsheet.name)
+      if sheet_names.include?(wsheet.name)
         wsheet.each 2 do |row|
           begin
             imp_obj =  ImportObject.new(row)
