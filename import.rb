@@ -105,7 +105,7 @@ module Import
         parent = survey_season
       end
       hcap = HistoricCapture.where(fn_photo_reference: plate_id, plate_id: plate_id, lac_box: box, digitization_location: "LAC", comments: comments, capture_owner_id: parent.id, capture_owner_type: parent.class.name).first_or_create
-      if hcap.capture_images.where("image like '%#{camera_id}'").blank?
+      if hcap.capture_images.where("image like '%#{camera_id}%'").blank?
         hcap.capture_images.create(image: File.open(image_path), image_state: "MISC", comments: "Not scanned. Photo of glass plate negative")
       end
       row[8] = "http://envi-mountain-0003.envi.uvic.ca/historic_captures/#{hcap.id}"
