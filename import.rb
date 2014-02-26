@@ -76,7 +76,7 @@ module Import
       self.plate_id = row[4].to_s.chomp(".0")
       self.camera_id = convert_camera_id(row[5])
       self.comments = row[6]
-      self.box = row[9]
+      self.box = row[9].sub("Box ","")
       self.is_envelope = false
     end
 
@@ -103,9 +103,9 @@ module Import
       else
         parent = survey_season
       end
-      hcap = HistoricCapture.where(field_note_photo_reference: plate_id, plate_id: plate_id, comments: comments, capture_owner_id: parent.id, capture_owner_type: parent.class.name).first_or_create
+      hcap = HistoricCapture.where(fn_photo_reference: plate_id, plate_id: plate_id, lac_box: box, digitization_location: "LAC", comments: comments, capture_owner_id: parent.id, capture_owner_type: parent.class.name).first_or_create
       if hcap.capture_images.where("image like '%#{camera_id}'").blank?
-        hcap.capture_images.create(image: File.open(image_path), image_state: "MISC")
+        hcap.capture_images.create(image: File.open(image_path), image_state: "MISC", comments: "Not scanned. Photo of glass plate negative")
       end
       row[8] = "http://envi-mountain-0003.envi.uvic.ca/historic_captures/#{hcap.id}"
     end
