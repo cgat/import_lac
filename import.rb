@@ -39,20 +39,22 @@ module Import
     spreadsheet.worksheets.each do |wsheet|
       if sheet_names.include?(wsheet.name)
         wsheet.each 2 do |row|
-          begin
-            imp_obj =  ImportObject.new(row)
-            imp_obj.image_path = files_list.find{|f| f=~/#{imp_obj.camera_id}.jpg$/}
-            if imp_obj.image_path.blank?
-              imp_obj.image_path = envelope_files_list.find{|f| f=~/#{imp_obj.camera_id}.jpg$/}
-              if img_obj.image_path.blank?
-                raise StandardError, "No image_path found in list #{img_obj.row}"
-              else
-                img_obj.is_envelope=true
+          unless row[0].blank? && row[1].blank? && row[2].blank?
+            begin
+              imp_obj =  ImportObject.new(row)
+              imp_obj.image_path = files_list.find{|f| f=~/#{imp_obj.camera_id}.jpg$/}
+              if imp_obj.image_path.blank?
+                imp_obj.image_path = envelope_files_list.find{|f| f=~/#{imp_obj.camera_id}.jpg$/}
+                if img_obj.image_path.blank?
+                  raise StandardError, "No image_path found in list #{img_obj.row}"
+                else
+                  img_obj.is_envelope=true
+                end
               end
+              import_objects<< imp_obj
+            rescue => e
+              puts "Error: #{row} : #{e}"
             end
-            import_objects<< imp_obj
-          rescue => e
-            puts "Error: #{row} : #{e}"
           end
         end
       end
