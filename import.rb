@@ -71,9 +71,9 @@ module Import
       self.row = row
       self.surveyor = Surveyor.find_by_last_name!(row[0])
       self.survey = surveyor.surveys.find_by_name!(row[1])
-      self.survey_season = survey.survey_seasons.find_by_year!(row[2].chomp(".0"))
-      self.station_name = row[3].chomp(".0")
-      self.plate_id = row[4].chomp(".0")
+      self.survey_season = survey.survey_seasons.find_by_year!(row[2].to_s.chomp(".0"))
+      self.station_name = row[3].to_s.chomp(".0")
+      self.plate_id = row[4].to_s.chomp(".0")
       self.camera_id = convert_camera_id(row[5])
       self.comments = row[6]
       self.box = row[9]
