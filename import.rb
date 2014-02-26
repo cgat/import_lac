@@ -51,7 +51,7 @@ module Import
               end
             end
             import_objects<< imp_obj
-          rescue e
+          rescue => e
             puts "Error: #{row} : #{e}"
           end
         end
