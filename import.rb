@@ -30,6 +30,7 @@ module Import
 
     import_objects = load_import_objects(book,sheet_names, files_list, envelope_files_list)
     import_objects.each{|imp_obj| imp_obj.import unless imp_obj.is_envelope}
+    book.worksheets.each {|w| w.row(0)[0]=w.row(0)[0] }
     book.write(spreadsheet_output_path)
     nil
   end
