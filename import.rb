@@ -1,6 +1,6 @@
 def unbundled_require(gem_name)
   if defined?(::Bundler)
-    spec_path = Dir.glob("#{Gem.dir}/specifications/#{gem_name}-*.gemspec").last
+    spec_path = Dir.glob("/Users/mlp/.rvm/gems/ruby-1.9.3-p194/specifications/#{gem_name}-*.gemspec").last
     if spec_path.nil?
       warn "Couldn't find #{gem_name}"
       return
