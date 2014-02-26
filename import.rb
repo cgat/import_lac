@@ -45,10 +45,10 @@ module Import
               imp_obj.image_path = files_list.find{|f| f=~/#{imp_obj.camera_id}.jpg$/}
               if imp_obj.image_path.blank?
                 imp_obj.image_path = envelope_files_list.find{|f| f=~/#{imp_obj.camera_id}.jpg$/}
-                if img_obj.image_path.blank?
-                  raise StandardError, "No image_path found in list #{img_obj.row}"
+                if imp_obj.image_path.blank?
+                  raise StandardError, "No image_path found in list #{imp_obj.row}"
                 else
-                  img_obj.is_envelope=true
+                  imp_obj.is_envelope=true
                 end
               end
               import_objects<< imp_obj
