@@ -109,6 +109,7 @@ module Import
         hcap.capture_images.create(image: File.open(image_path), image_state: "MISC", comments: "Not scanned. Photo of glass plate negative")
       end
       row[8] = "http://envi-mountain-0003.envi.uvic.ca/historic_captures/#{hcap.id}"
+      puts "#{row[8]}"
     end
   end
 
