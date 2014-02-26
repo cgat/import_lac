@@ -83,7 +83,9 @@ module Import
     def convert_camera_id(cam_id)
       id = cam_id[/\d{3}-{0,1}\d{4}/]
       raise StandardError, "Camera_id did not match pattern" if id.blank?
-      id = "P#{id.gsub("-","")}"
+      id = "P#{id.gsub("-","")}" if cam_id !~ /FUJI/
+      id = "DSCF#{id.gsub("-","")}" if cam_id =~ /FUJI/
+      id
     end
 
     def import
