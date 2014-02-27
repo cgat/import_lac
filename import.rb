@@ -104,7 +104,11 @@ module Import
       else
         parent = survey_season
       end
-      hcap = HistoricCapture.where(fn_photo_reference: plate_id, plate_id: plate_id, lac_box: box, digitization_location: "LAC", comments: comments, capture_owner_id: parent.id, capture_owner_type: parent.class.name).first_or_create
+      if plate_id.blank?
+        hcap = HistoricCapture.create(fn_photo_reference: plate_id, plate_id: plate_id, lac_box: box, digitization_location: "LAC", comments: comments, capture_owner_id: parent.id, capture_owner_type: parent.class.name)
+      else
+        hcap = HistoricCapture.where(fn_photo_reference: plate_id, plate_id: plate_id, lac_box: box, digitization_location: "LAC", comments: comments, capture_owner_id: parent.id, capture_owner_type: parent.class.name).first_or_create
+      end
       if hcap.capture_images.where("image like '%#{camera_id}%'").blank?
         hcap.capture_images.create(image: FilelessIO.new(image_path), image_state: "MISC", comments: "Not scanned. Photo of glass plate negative")
       end
