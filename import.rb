@@ -99,7 +99,7 @@ module Import
       raise StandardError, "Can't import envelope files" if is_envelope
       if station_name.present?
         station = survey_season.stations.where(name: station_name).first_or_create
-        historic_visit = station.historic_visit || station.historic_visit.create()
+        historic_visit = station.historic_visit || station.create_historic_visit
         parent = historic_visit
       else
         parent = survey_season
