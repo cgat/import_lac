@@ -77,6 +77,8 @@ module Import
       self.plate_id = row[4].to_s.chomp(".0")
       self.camera_id = convert_camera_id(row[5])
       self.comments = row[6].to_s.chomp(".0")
+      #don't save blank strings to db
+      self.comments = nil if self.comments.blank?
       self.box = row[9].sub("Box ","")
       self.is_envelope = false
     end
