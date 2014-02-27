@@ -76,7 +76,7 @@ module Import
       self.station_name = row[3].to_s.chomp(".0")
       self.plate_id = row[4].to_s.chomp(".0")
       self.camera_id = convert_camera_id(row[5])
-      self.comments = row[6]
+      self.comments = row[6].to_s.chomp(".0")
       self.box = row[9].sub("Box ","")
       self.is_envelope = false
     end
@@ -105,7 +105,7 @@ module Import
         parent = survey_season
       end
       if plate_id.blank?
-        hcap = HistoricCapture.create!(fn_photo_reference: plate_id, plate_id: plate_id, lac_box: box, digitization_location: "LAC", comments: comments, capture_owner_id: parent.id, capture_owner_type: parent.class.name)
+        hcap = HistoricCapture.create!(fn_photo_reference: plate_id, plate_id: plate_id, lac_box: box, digitization_location: "LAC", comments: comments., capture_owner_id: parent.id, capture_owner_type: parent.class.name)
       else
         hcap = HistoricCapture.where(fn_photo_reference: plate_id, plate_id: plate_id, lac_box: box, digitization_location: "LAC", comments: comments, capture_owner_id: parent.id, capture_owner_type: parent.class.name).first_or_create!
       end
